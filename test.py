@@ -105,6 +105,7 @@ while nFound < int(N) :
            if(nFound >= int(N)):
               break
     #print(oprListList)
+  curnOpnd = curnOpnd + 1
 print(nFound)
 
 
