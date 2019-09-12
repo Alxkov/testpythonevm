@@ -81,10 +81,11 @@ nOpnd = len(data_read[0]) - 1
 x = range(nOpnd)
 
 curnOpnd = 4
-opndListList = [list(p) for p in itertools.product(x, repeat= curnOpnd)]
+
 nFound = 0
 N = sys.argv[1]
 while nFound < int(N) :
+  opndListList = [list(p) for p in itertools.product(x, repeat= curnOpnd)]
   for i in opndListList:
       if(nFound >= int(N)):
          break
