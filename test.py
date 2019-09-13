@@ -53,7 +53,7 @@ def checkcorrect(opndList, opsList, table):
             if(curOpr == 'and'):
                 curOpnd2 = tmp1.pop()
                 tmp1.append(con(getlogvalue(curOpnd1, row),getlogvalue(curOpnd2, row)))    
-            if(curOpr == 'd'):
+            if(curOpr == 'or'):
                 curOpnd2 = tmp1.pop()
                 tmp1.append(con(getlogvalue(curOpnd1, row),getlogvalue(curOpnd2, row))) 
         
@@ -66,6 +66,38 @@ def checkcorrect(opndList, opsList, table):
     #print("after")
    # print(opndList) 
     return True
+
+def printcorrect(opndList, opsList, table):
+    #return false if doesn't correspond with table
+    #print("before")
+    #print(opndList)
+    res = ""
+    for row in table:
+        tmp1 = list(opndList)
+        tmp2 = list(opsList)
+        res = chr((tmp1.pop()) + ord('A'))
+        while len(tmp1) >= 1 or len(tmp2) >= 1:
+            curOpr = tmp2.pop()
+            #curOpnd1 = tmp1.pop()
+            if(curOpr == 'not'):
+                res = "(" + " not" + res + ")"
+            if(curOpr == 'and'):
+                curOpnd1 = tmp1.pop()
+                #curOpnd2 = tmp1.pop()
+                #tmp1.append(con(getlogvalue(curOpnd1, row),getlogvalue(curOpnd2, row)))    
+                res = "(" + res + " and " + chr(curOpnd1 + ord('A') ) + ")"
+            if(curOpr == 'or'):
+                curOpnd1 = tmp1.pop()  
+                #curOpnd2 = tmp1.pop()
+                #tmp1.append(con(getlogvalue(curOpnd1, row),getlogvalue(curOpnd2, row))) 
+                res = "("+ res +" or " + chr(curOpnd1 + ord('A')) + ")"
+        
+
+        #print("opndList:")
+        #print(opndList)    
+    #print("after")
+   # print(opndList) 
+    return res
 
 	
 with open('test.csv', 'r') as fp:
@@ -96,13 +128,14 @@ while nFound < int(N) :
            random_insert(j,'not')
          if(random() > 0.3):
            random_insert(j,'not')
-         if(random() > 0.1):
+         if(random() > 2.1):
            random_insert(j,'not')
          if checkcorrect(i,j,data_list) == True:
            nFound = nFound + 1
            print("expr: " + repr(nFound))
-           print(i)
-           print(j) 
+           #print(i)
+           #print(j) 
+           print(printcorrect(i,j,data_list))
            if(nFound >= int(N)):
               break
     #print(oprListList)
